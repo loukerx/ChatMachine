@@ -1,5 +1,5 @@
 # ChatMachine 0.1.1
-This is a chatting app of this [tutorial](http://www.jianshu.com/p/1f93e0fec8a5) 
+This is practice of a chatting app from this [tutorial](http://www.jianshu.com/p/1f93e0fec8a5) 
 ```
 Using:
 Chat Interface Design,
