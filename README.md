@@ -1,10 +1,10 @@
 # ChatMachine 0.1.1
 This is a practice of a chatting app from this [tutorial](http://www.jianshu.com/p/1f93e0fec8a5) 
 ```
-Using:
-Chat Interface Design,
-Parse,
-Swift 2.0,
+Including:
+Chatting Interface Design: message bubble
+Parse iOS API
+Swift 2.0
 Turing Robot API
 ...
 ```
