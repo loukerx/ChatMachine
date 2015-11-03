@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Parse
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +18,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // Override point for customization after application launch.
+        //        Parse.setApplicationId("CYdFL9mvG8jHqc4ZA5PJsWMInBbMMun0XCoqnHgf", clientKey: "6tGOC1uIKeYp5glvJE6MXZOWG9pmLtMuIUdh2Yzo")
+        //
+        //                var query = PFQuery(className: "Messages")
+        //                query.orderByAscending("sentDate")
+        //                query.findObjectsInBackgroundWithBlock { (objects,error) -> Void in
+        //                     for object in objects as! [PFObject]{
+        //                    let incoming:Bool = object["incoming"] as! Bool
+        //                    let text:String = object["text"] as! String
+        //                    let sentDate:NSDate = object["sentDate"] as! NSDate
+        //
+        //                    println("\(object.objectId!)\n\(incoming)\n\(text)\n\(sentDate)")
+        //                }
+        //                
+        //                }
+        
+        
         return true
     }
 
