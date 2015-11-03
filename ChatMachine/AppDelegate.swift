@@ -19,21 +19,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
-        // Override point for customization after application launch.
-        //        Parse.setApplicationId("CYdFL9mvG8jHqc4ZA5PJsWMInBbMMun0XCoqnHgf", clientKey: "6tGOC1uIKeYp5glvJE6MXZOWG9pmLtMuIUdh2Yzo")
-        //
-        //                var query = PFQuery(className: "Messages")
-        //                query.orderByAscending("sentDate")
-        //                query.findObjectsInBackgroundWithBlock { (objects,error) -> Void in
-        //                     for object in objects as! [PFObject]{
-        //                    let incoming:Bool = object["incoming"] as! Bool
-        //                    let text:String = object["text"] as! String
-        //                    let sentDate:NSDate = object["sentDate"] as! NSDate
-        //
-        //                    println("\(object.objectId!)\n\(incoming)\n\(text)\n\(sentDate)")
-        //                }
-        //                
-        //                }
+            Parse.setApplicationId("1QR1Q5hJXFjboEvGUlZ4NGDAbsTFPUIcIuboxBfD", clientKey: "tQkQEKggs5rROYEYAvEDPKrCxY2dEEcXC7tqmpZH")
+
+//            let query = PFQuery(className: "Messages")
+//            query.orderByAscending("sentDate")
+//            query.findObjectsInBackgroundWithBlock { (objects,error) -> Void in
+//                 for object in objects! as [PFObject]{
+//                let incoming:Bool = object["incoming"] as! Bool
+//                let text:String = object["text"] as! String
+//                let sentDate:NSDate = object["sentDate"] as! NSDate
+//
+//                print("\(object.objectId!)\n\(incoming)\n\(text)\n\(sentDate)")
+//            }
+//        }
+        
+        
+        //navigation bar
+        let ChatVC:ChatViewController = ChatViewController()
+        ChatVC.title = "灵灵"
+        
+        UINavigationBar.appearance().tintColor = UIColor(red: 0.05, green: 0.47, blue: 0.91, alpha: 1.0)
+        UINavigationBar.appearance().barTintColor = UIColor(red: 0.05, green: 0.47, blue: 0.91, alpha: 1.0)
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
+        let navigationVC:UINavigationController = UINavigationController(rootViewController: ChatVC)
+        
+        let frame = UIScreen.mainScreen().bounds
+        window = UIWindow(frame: frame)
+        window!.rootViewController = navigationVC
+        window!.makeKeyAndVisible()
+        
+        
+        
         
         
         return true
