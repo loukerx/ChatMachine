@@ -5,12 +5,13 @@ Including:
 Chatting Interface Design: message bubble
 Parse iOS API
 Swift 2.0
+SnapKit：用代码设置autolayout
 Turing Robot API
 ...
 ```
 
 
-## Updated CocoaPod Installation:
+## Updated CocoaPod:
 
 ```
 source 'https://github.com/CocoaPods/Specs.git'
