@@ -14,7 +14,7 @@ import SnapKit
 
 let messageFontSize: CGFloat = 17
 let toolBarMinHeight: CGFloat = 44
-
+let textViewMaxHeight: (portrait: CGFloat, landscape: CGFloat) = (portrait: 272, landscape: 90)
 
 
 class InputTextView: UITextView {
@@ -187,7 +187,7 @@ class ChatViewController: UITableViewController, UITextViewDelegate {
                 sendButton.setTitleColor(UIColor(red: 142/255, green: 142/255, blue: 147/255, alpha: 1), forState: .Disabled)
                 sendButton.setTitleColor(UIColor(red: 0.05, green: 0.47, blue: 0.91, alpha: 1.0), forState: .Normal)
                 sendButton.contentEdgeInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
-                sendButton.addTarget(self, action: "sendAction", forControlEvents: UIControlEvents.TouchUpInside)
+                sendButton.addTarget(self, action: "sendAction", forControlEvents: UIControlEvents.TouchUpInside)//add Button Action
                 toolBar.addSubview(sendButton)
                 
                 // 对组件进行Autolayout设置
@@ -216,14 +216,53 @@ class ChatViewController: UITableViewController, UITextViewDelegate {
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func sendAction() {
+        //1
+        messages.append([Message(incoming: false, text: textView.text, sentDate: NSDate())])
+        textView.text = nil
+        updateTextViewHeight()
+        sendButton.enabled = false
+        //2
+        let lastSection = tableView.numberOfSections
+        tableView.beginUpdates()
+        tableView.insertSections(NSIndexSet(index: lastSection), withRowAnimation:.Automatic)
+        tableView.insertRowsAtIndexPaths([
+            NSIndexPath(forRow: 0, inSection: lastSection),
+            NSIndexPath(forRow: 1, inSection: lastSection)
+            ], withRowAnimation: .Automatic)
+        tableView.endUpdates()
+        tableViewScrollToBottomAnimated(true)
+        
+        
     }
-    */
-
+    
+    func updateTextViewHeight() {
+        let oldHeight = textView.frame.height
+ 
+        //deperated in iOS 9
+        let maxHeight = UIInterfaceOrientationIsPortrait(UIApplication.sharedApplication().statusBarOrientation) ? textViewMaxHeight.portrait : textViewMaxHeight.landscape
+        var newHeight = min(textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.max)).height, maxHeight)
+        #if arch(x86_64) || arch(arm64)
+            newHeight = ceil(newHeight)
+        #else
+            newHeight = CGFloat(ceilf(newHeight.native))
+        #endif
+        if newHeight != oldHeight {
+            toolBar.frame.size.height = newHeight+8*2-0.5
+        }
+    }
+    
+    func textViewDidChange(textView: UITextView) {
+        updateTextViewHeight()
+        sendButton.enabled = textView.hasText()
+    }
+    
+    func tableViewScrollToBottomAnimated(animated: Bool) {
+        
+        let numberOfSections = messages.count
+        let numberOfRows = messages[numberOfSections - 1].count
+        if numberOfRows > 0 {
+            tableView.scrollToRowAtIndexPath(NSIndexPath(forRow:numberOfRows, inSection: numberOfSections - 1), atScrollPosition: .Bottom, animated: animated)
+        }
+    }
 }
