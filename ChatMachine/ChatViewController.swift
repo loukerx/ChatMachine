@@ -89,8 +89,7 @@ class ChatViewController: UITableViewController, UITextViewDelegate {
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier,forIndexPath: indexPath) as! MessageSentDateTableViewCell
             let message = messages[indexPath.section][0]
             
-            
-            cell.sentDateLabel.text = "\(message.sentDate)"
+            cell.sentDateLabel.text = formatDate(message.sentDate)
             
             return cell
             
@@ -116,7 +115,26 @@ class ChatViewController: UITableViewController, UITextViewDelegate {
         
     }
     
-    
+    func formatDate(date: NSDate) -> String {
+        let calendar = NSCalendar.currentCalendar()
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.locale = NSLocale(localeIdentifier: "zh_CN")
+        
+        let last18hours = (-18*60*60 < date.timeIntervalSinceNow)
+        let isToday = calendar.isDateInToday(date)
+//        let aaa = calendar.compareDate(NSDate(timeIntervalSinceNow: -7*24*60*60), toDate: date, toUnitGranularity: .Day)
+        let isLast7Days = (calendar.compareDate(NSDate(timeIntervalSinceNow: -7*24*60*60), toDate: date, toUnitGranularity:.Day) == NSComparisonResult.OrderedAscending)
+        
+        if last18hours || isToday {
+            dateFormatter.dateFormat = "a HH:mm"
+        } else if isLast7Days {
+            dateFormatter.dateFormat = "MM月dd日 a HH:mm EEEE"
+        } else {
+            dateFormatter.dateFormat = "YYYY年MM月dd日 a HH:mm"
+            
+        }
+        return dateFormatter.stringFromDate(date)
+    }
     
     
     //MARK: - Keyboard View
