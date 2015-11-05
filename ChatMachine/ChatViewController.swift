@@ -48,29 +48,53 @@ class ChatViewController: UITableViewController, UITextViewDelegate {
         self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom:toolBarMinHeight, right: 0)
         self.tableView.separatorStyle = .None
         
-        
-        //Fake Message
-        messages = [
-            [
-                Message(incoming: true, text: "你叫什么名字？", sentDate: NSDate(timeIntervalSinceNow: -12*60*60*24)),
-                Message(incoming: false, text: "我叫灵灵，聪明又可爱的灵灵", sentDate: NSDate(timeIntervalSinceNow:-12*60*60*24))
-            ],
-            [
-                Message(incoming: true, text: "你爱不爱我？", sentDate: NSDate(timeIntervalSinceNow: -6*60*60*24 - 200)),
-                Message(incoming: false, text: "爱你么么哒", sentDate: NSDate(timeIntervalSinceNow: -6*60*60*24 - 100))
-            ],
-            [
-                Message(incoming: true, text: "北京今天天气", sentDate: NSDate(timeIntervalSinceNow: -60*60*18)),
-                Message(incoming: false, text: "北京:08/30 周日,19-27° 21° 雷阵雨转小雨-中雨 微风小于3级;08/31 周一,18-26° 中雨 微风小于3级;09/01 周二,18-25° 阵雨 微风小于3级;09/02 周三,20-30° 多云 微风小于3级", sentDate: NSDate(timeIntervalSinceNow: -60*60*18))
-            ],
-            [
-                Message(incoming: true, text: "你在干嘛", sentDate: NSDate(timeIntervalSinceNow: -60)),
-                Message(incoming: false, text: "我会逗你开心啊", sentDate: NSDate(timeIntervalSinceNow: -65))
-            ],
-        ]
+        self.initData()
+  
         
     }
 
+    func initData(){
+        var index = 0
+        var section = 0
+        var currentDate:NSDate?
+        //1
+        let query:PFQuery = PFQuery(className:"Messages")
+        query.orderByAscending("sentDate")
+        //2
+        
+        do {
+            
+            let myObjects = try query.findObjects()
+
+            for object in myObjects {// query.findObjects() {
+                let message = Message(incoming: object["incoming"] as! Bool, text: object["text"] as! String, sentDate: object["sentDate"] as! NSDate)
+                
+                if index == 0{
+                    currentDate = message.sentDate
+                }
+                let timeInterval = message.sentDate.timeIntervalSinceDate(currentDate!)
+                
+                //3
+                if timeInterval < 120{
+                    messages[section].append(message)
+                }else{
+                    section++
+                    messages.append([message])
+                    
+                    
+                }
+                currentDate = message.sentDate
+                index++
+            }
+            
+        } catch let error as NSError {
+            print(error)
+        }
+     
+    }
+    
+    
+    
     //MARK: - TableView DataSource
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
@@ -101,14 +125,9 @@ class ChatViewController: UITableViewController, UITextViewDelegate {
                 cell = MessageBubbleTableViewCell(style: .Default, reuseIdentifier: cellIdentifier)
             }
             
-            
-            
             let message = messages[indexPath.section][indexPath.row - 1]
             
             cell.configureWithMessage(message)
-            
-            
-            
             
             return cell
         }
@@ -122,7 +141,7 @@ class ChatViewController: UITableViewController, UITextViewDelegate {
         
         let last18hours = (-18*60*60 < date.timeIntervalSinceNow)
         let isToday = calendar.isDateInToday(date)
-//        let aaa = calendar.compareDate(NSDate(timeIntervalSinceNow: -7*24*60*60), toDate: date, toUnitGranularity: .Day)
+
         let isLast7Days = (calendar.compareDate(NSDate(timeIntervalSinceNow: -7*24*60*60), toDate: date, toUnitGranularity:.Day) == NSComparisonResult.OrderedAscending)
         
         if last18hours || isToday {
