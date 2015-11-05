@@ -1,5 +1,7 @@
 # ChatMachine 0.1.1
 This is a practice of a chatting app from this [tutorial](http://www.jianshu.com/p/1f93e0fec8a5) 
+
+* [tutorial 2](http://www.jianshu.com/p/f2488a659688)
 ```
 Including:
 Chatting Interface Design: message bubble
