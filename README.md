@@ -45,6 +45,8 @@ Turing Robot API
 ...
 ```
 
+## [Tutorial 4](http://www.jianshu.com/p/91545cde4f8d)
 
 
+## [Tutorial 5](http://www.jianshu.com/p/6bf05564fe27)
 
