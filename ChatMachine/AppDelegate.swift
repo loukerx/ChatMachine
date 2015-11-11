@@ -9,6 +9,9 @@
 import UIKit
 import Parse
 
+let api_key = "c556a50517a38da0afe14cd777b07d4e"
+let api_url = "http://www.tuling123.com/openapi/api"
+let userId = "chatMachineUserID7777"//userId可以随便起，这里的作用是告诉api，聊天的是同一个人，只是为了连接上下文的语义。
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

@@ -16,10 +16,11 @@ let bubbleTag = 8
 class MessageBubbleTableViewCell: UITableViewCell {
 
     //MARK: - Outlets
-
     let bubbleImageView: UIImageView
     let messageLabel: UILabel
-
+    
+    var url = ""
+    
     let bubbleImage = bubbleImageMake()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -70,6 +71,8 @@ class MessageBubbleTableViewCell: UITableViewCell {
     func configureWithMessage(message: Message) {
         //1 设置消息内容。
         messageLabel.text = message.text
+        self.url = message.url
+        
         //2 删除聊天气泡的left或right约束，以便于根据消息类型重新进行设置。
         let constraints: NSArray = contentView.constraints
         let indexOfConstraint = constraints.indexOfObjectPassingTest { ( constraint, idx, stop) in

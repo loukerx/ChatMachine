@@ -156,6 +156,17 @@ class ChatViewController: UITableViewController, UITextViewDelegate {
     }
     
     
+    //MARK: - UITableView Delegate
+    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        let selectedCell = tableView.cellForRowAtIndexPath(indexPath) as! MessageBubbleTableViewCell
+        if selectedCell.url != ""{
+            let url = NSURL(string: selectedCell.url)
+            UIApplication.sharedApplication().openURL(url!)
+        }
+        return nil
+    }
+    
+    
     //MARK: - Keyboard View
     override func canBecomeFirstResponder() -> Bool {
         return true
@@ -217,8 +228,10 @@ class ChatViewController: UITableViewController, UITextViewDelegate {
     
 
     func sendAction() {
+        
+        let question = textView.text
         //1
-        messages.append([Message(incoming: false, text: textView.text, sentDate: NSDate())])
+        messages.append([Message(incoming: false, text: question, sentDate: NSDate())])
         textView.text = nil
         updateTextViewHeight()
         sendButton.enabled = false
@@ -234,6 +247,45 @@ class ChatViewController: UITableViewController, UITextViewDelegate {
         tableViewScrollToBottomAnimated(true)
         
         
+        let url = NSURL(string: api_url)!
+        
+        let parameters = [
+            "key":api_key,
+            "info":question,
+            "userid":userId
+        ]
+        
+        
+        Alamofire.request(.GET, url, parameters: parameters).responseJSON(options: NSJSONReadingOptions.MutableContainers) { response in
+            
+            
+            if let JSON = response.result.value {
+                print(JSON)
+                
+                if let text = JSON.objectForKey("text") as? String{
+//                    self.messages[lastSection].append(Message(incoming: true, text:text, sentDate: NSDate()))
+                    
+                    
+                    if let url = JSON.objectForKey("url") as? String{
+                        let message = Message(incoming: true, text:text+"\n(点击该消息打开查看)", sentDate: NSDate())
+                        message.url = url
+                        self.messages[lastSection].append(message)
+                    }else{
+                        let message = Message(incoming: true, text:text, sentDate: NSDate())
+                        self.messages[lastSection].append(message)
+                    }
+                    
+                    
+                    
+                    self.tableView.beginUpdates()
+                    self.tableView.insertRowsAtIndexPaths([
+                        NSIndexPath(forRow: 2, inSection: lastSection)
+                        ], withRowAnimation: .Automatic)
+                    self.tableView.endUpdates()
+                    self.tableViewScrollToBottomAnimated(true)
+                }
+            }
+        }
     }
     
     func updateTextViewHeight() {

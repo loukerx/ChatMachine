@@ -15,6 +15,8 @@ class Message {
     let text: String
     let sentDate: NSDate
     
+    var url = ""
+    
     init(incoming: Bool, text: String, sentDate: NSDate) {
         self.incoming = incoming
         self.text = text
