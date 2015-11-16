@@ -4,7 +4,7 @@ This is a practice of a chatting app from this [tutorial](http://www.jianshu.com
 # Requirements
 * Xcode 7 
 * Swift 2.1
-* iOS 8.0+
+* iOS 9.0+
 
 
 # Updated CocoaPod:
