@@ -24,7 +24,7 @@ class InputTextView: UITextView {
 }
 
 class ChatViewController: UITableViewController, UITextViewDelegate {
-
+    
     //MARK: - Variables
     var messages:[[Message]] = [[]]
     
@@ -37,7 +37,7 @@ class ChatViewController: UITableViewController, UITextViewDelegate {
     //MARK: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         
         
         tableView.registerClass(MessageSentDateTableViewCell.self, forCellReuseIdentifier: NSStringFromClass(MessageSentDateTableViewCell))
@@ -49,10 +49,10 @@ class ChatViewController: UITableViewController, UITextViewDelegate {
         self.tableView.separatorStyle = .None
         
         self.initData()
-  
+        
         
     }
-
+    
     func initData(){
         var index = 0
         var section = 0
@@ -65,12 +65,17 @@ class ChatViewController: UITableViewController, UITextViewDelegate {
         do {
             
             let myObjects = try query.findObjects()
-
+            
             for object in myObjects {// query.findObjects() {
                 let message = Message(incoming: object["incoming"] as! Bool, text: object["text"] as! String, sentDate: object["sentDate"] as! NSDate)
-                
+
+                if let url = object["url"] as? String{
+                    message.url = url
+                }
+
                 if index == 0{
                     currentDate = message.sentDate
+                    
                 }
                 let timeInterval = message.sentDate.timeIntervalSinceDate(currentDate!)
                 
@@ -90,7 +95,7 @@ class ChatViewController: UITableViewController, UITextViewDelegate {
         } catch let error as NSError {
             print(error)
         }
-     
+        
     }
     
     
@@ -141,7 +146,7 @@ class ChatViewController: UITableViewController, UITextViewDelegate {
         
         let last18hours = (-18*60*60 < date.timeIntervalSinceNow)
         let isToday = calendar.isDateInToday(date)
-
+        
         let isLast7Days = (calendar.compareDate(NSDate(timeIntervalSinceNow: -7*24*60*60), toDate: date, toUnitGranularity:.Day) == NSComparisonResult.OrderedAscending)
         
         if last18hours || isToday {
@@ -166,6 +171,22 @@ class ChatViewController: UITableViewController, UITextViewDelegate {
         return nil
     }
     
+    //MARK: - Message Action
+    func saveMessage(message:Message){
+        let saveObject = PFObject(className: "Messages")
+        saveObject["incoming"] = message.incoming
+        saveObject["text"] = message.text
+        saveObject["sentDate"] = message.sentDate
+        saveObject["url"] = message.url
+        
+        saveObject.saveEventually { (success, error) -> Void in
+            if success{
+                print("消息保存成功!")
+            }else{
+                print("消息保存失败! \(error)")
+            }
+        }
+    }
     
     //MARK: - Keyboard View
     override func canBecomeFirstResponder() -> Bool {
@@ -211,7 +232,7 @@ class ChatViewController: UITableViewController, UITextViewDelegate {
                     make.top.equalTo(self.toolBar.snp_top).offset(7.5)
                     make.right.equalTo(self.sendButton.snp_left).offset(-2)
                     make.bottom.equalTo(self.toolBar.snp_bottom).offset(-8)
-                
+                    
                 })
                 
                 sendButton.snp_makeConstraints(closure: { (make) -> Void in
@@ -226,12 +247,17 @@ class ChatViewController: UITableViewController, UITextViewDelegate {
         
     }
     
-
+    
     func sendAction() {
         
         let question = textView.text
+        
         //1
-        messages.append([Message(incoming: false, text: question, sentDate: NSDate())])
+        let message = Message(incoming: false, text: question, sentDate: NSDate())
+        saveMessage(message)
+        messages.append([message])
+        
+        
         textView.text = nil
         updateTextViewHeight()
         sendButton.enabled = false
@@ -263,15 +289,15 @@ class ChatViewController: UITableViewController, UITextViewDelegate {
                 print(JSON)
                 
                 if let text = JSON.objectForKey("text") as? String{
-//                    self.messages[lastSection].append(Message(incoming: true, text:text, sentDate: NSDate()))
-                    
                     
                     if let url = JSON.objectForKey("url") as? String{
                         let message = Message(incoming: true, text:text+"\n(点击该消息打开查看)", sentDate: NSDate())
                         message.url = url
+                        self.saveMessage(message)
                         self.messages[lastSection].append(message)
                     }else{
                         let message = Message(incoming: true, text:text, sentDate: NSDate())
+                        self.saveMessage(message)
                         self.messages[lastSection].append(message)
                     }
                     
@@ -290,7 +316,7 @@ class ChatViewController: UITableViewController, UITextViewDelegate {
     
     func updateTextViewHeight() {
         let oldHeight = textView.frame.height
- 
+        
         //deperated in iOS 9
         let maxHeight = UIInterfaceOrientationIsPortrait(UIApplication.sharedApplication().statusBarOrientation) ? textViewMaxHeight.portrait : textViewMaxHeight.landscape
         var newHeight = min(textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.max)).height, maxHeight)
