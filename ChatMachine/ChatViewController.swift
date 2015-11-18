@@ -56,56 +56,7 @@ class ChatViewController: UITableViewController, UITextViewDelegate {
         notificationCenter.addObserver(self, selector: "keyboardDidShow:", name: UIKeyboardDidShowNotification, object: nil)
 
     }
-    
-    
-    func initData2(){
-        var index = 0
-        var section = 0
-        var currentDate:NSDate?
-        
-        messages = [[Message(incoming: true, text: "你好，请叫我灵灵，我是主人的贴身小助手!", sentDate: NSDate())]]
-        
-        //1
-        let query:PFQuery = PFQuery(className:"Messages")
-        query.orderByAscending("sentDate")
-        //2
 
-        do {
-        
-        let myObjects = try query.findObjects()
-        
-        for object in myObjects {// query.findObjects() {
-        let message = Message(incoming: object["incoming"] as! Bool, text: object["text"] as! String, sentDate: object["sentDate"] as! NSDate)
-        
-        if let url = object["url"] as? String{
-        message.url = url
-        }
-        
-        if index == 0{
-        currentDate = message.sentDate
-        
-        }
-        let timeInterval = message.sentDate.timeIntervalSinceDate(currentDate!)
-        
-        //3
-        if timeInterval < 120{
-        messages[section].append(message)
-        }else{
-        section++
-        messages.append([message])
-        
-        
-        }
-        currentDate = message.sentDate
-        index++
-        }
-        
-        } catch let error as NSError {
-        print(error)
-        }
-      
-    }
-    
     func initData(){
         var index = 0
         var section = 0
@@ -129,7 +80,7 @@ class ChatViewController: UITableViewController, UITextViewDelegate {
                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                                 
                                 self.tableView.reloadData()
-                                
+                                self.tableViewScrollToBottomAnimated(false)//显示最新的信息
                             })
                             
                         }
@@ -365,8 +316,6 @@ class ChatViewController: UITableViewController, UITextViewDelegate {
             }
             return toolBar
         }
-        
-        
     }
     
     
