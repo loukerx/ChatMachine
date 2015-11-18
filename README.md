@@ -46,7 +46,13 @@ Turing Robot API
 ```
 
 ## [Tutorial 4](http://www.jianshu.com/p/91545cde4f8d)
-
+```
+用KVO(Key-Value Observing)方法优化键盘弹出动画
+将同步下载消息改为异步，以减轻主线程的压力
+Code:  query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in }
+TableView滚动至最新的消息位置 Code：tableViewScrollToBottomAnimated
+...
+```
 
 ## [Tutorial 5](http://www.jianshu.com/p/6bf05564fe27)
 
