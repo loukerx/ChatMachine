@@ -50,7 +50,11 @@ class ChatViewController: UITableViewController, UITextViewDelegate {
         
         self.initData()
         
-        
+        //adjust keyboard position
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        notificationCenter.addObserver(self, selector: "keyboardDidShow:", name: UIKeyboardDidShowNotification, object: nil)
+
     }
     
     func initData(){
@@ -98,7 +102,52 @@ class ChatViewController: UITableViewController, UITextViewDelegate {
         
     }
     
+    //MARK: - Notification
+    func keyboardWillShow(notification: NSNotification) {
+        
+        let userInfo = notification.userInfo as NSDictionary!
+        let frameNew = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+        let insetNewBottom = tableView.convertRect(frameNew, fromView: nil).height//keyboard 高度
+        let insetOld = tableView.contentInset//tableview 总高度
+        let insetChange = insetNewBottom - insetOld.bottom//tableview 移动高度
+        let overflow = tableView.contentSize.height - (tableView.frame.height-insetOld.top-insetOld.bottom)//指的是所有消息的总高度和键盘弹出前contentInset的差值，实际上就是没有显示部分的高度，也就是溢出的部分。
+        
+        let duration = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
+        let animations: (() -> Void) = {
+            if !(self.tableView.tracking || self.tableView.decelerating) {
+                // 根据键盘位置调整Inset
+                if overflow > 0 {
+                    self.tableView.contentOffset.y += insetChange
+                    if self.tableView.contentOffset.y < -insetOld.top {
+                        self.tableView.contentOffset.y = -insetOld.top
+                    }
+                } else if insetChange > -overflow {
+                    self.tableView.contentOffset.y += insetChange + overflow
+                }
+            }
+        }
+        if duration > 0 {
+            let options = UIViewAnimationOptions(rawValue: UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).integerValue << 16)) // http://stackoverflow.com/a/18873820/242933
+            UIView.animateWithDuration(duration, delay: 0, options: options, animations: animations, completion: nil)
+        } else {
+            animations()
+        }
+    }
     
+    func keyboardDidShow(notification: NSNotification) {
+        let userInfo = notification.userInfo as NSDictionary!
+        let frameNew = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+        let insetNewBottom = tableView.convertRect(frameNew, fromView: nil).height
+        
+        //根据键盘高度设置Inset
+        let contentOffsetY = tableView.contentOffset.y
+        tableView.contentInset.bottom = insetNewBottom
+        tableView.scrollIndicatorInsets.bottom = insetNewBottom
+        // 优化，防止键盘消失后tableview有跳跃
+        if self.tableView.tracking || self.tableView.decelerating {
+            tableView.contentOffset.y = contentOffsetY
+        }
+    }
     
     //MARK: - TableView DataSource
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
