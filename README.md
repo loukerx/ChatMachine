@@ -1,4 +1,4 @@
-# ChatMachine 0.3.1
+# ChatMachine 0.4.1
 This is a practice of a chatting app from this [tutorial](http://www.jianshu.com/p/1f93e0fec8a5) 
 
 # Requirements
