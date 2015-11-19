@@ -51,6 +51,8 @@ Turing Robot API
 将同步下载消息改为异步，以减轻主线程的压力
 Code:  query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in }
 TableView滚动至最新的消息位置 Code：tableViewScrollToBottomAnimated
+实现app登录、注册的功能：
+PFLogInViewController和PFSignUpViewController
 ...
 ```
 
