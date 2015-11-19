@@ -62,11 +62,18 @@ class ChatViewController: UITableViewController, UITextViewDelegate {
         var section = 0
         var currentDate:NSDate?
        
-        messages = [[Message(incoming: true, text: "你好，请叫我灵灵，我是主人的贴身小助手!", sentDate: NSDate())]]
-   
+
         //1
         let query:PFQuery = PFQuery(className:"Messages")
         query.orderByAscending("sentDate")
+        
+        //读取当前用户
+        if let user = PFUser.currentUser(){
+            query.whereKey("createdBy", equalTo: user)
+            messages = [[Message(incoming: true, text: "\(user.username!)你好，请叫我灵灵，我是主人的贴身小助手!", sentDate: NSDate())]]
+        }
+        
+        
         //2
         query.findObjectsInBackgroundWithBlock { (objects, error) -> Void in
             if error == nil {
@@ -252,6 +259,11 @@ class ChatViewController: UITableViewController, UITextViewDelegate {
         saveObject["sentDate"] = message.sentDate
         saveObject["url"] = message.url
         
+        //保存至当前用户
+        let user = PFUser.currentUser()
+        saveObject["createdBy"] = user
+        
+        //save message
         saveObject.saveEventually { (success, error) -> Void in
             if success{
                 print("消息保存成功!")

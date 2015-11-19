@@ -37,19 +37,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        }
         
         
-        //navigation bar
-        let ChatVC:ChatViewController = ChatViewController()
-        ChatVC.title = "灵灵"
+        let welcomeVC:WelcomeViewController = WelcomeViewController()
         
-        UINavigationBar.appearance().tintColor = UIColor(red: 0.05, green: 0.47, blue: 0.91, alpha: 1.0)
+        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
         UINavigationBar.appearance().barTintColor = UIColor(red: 0.05, green: 0.47, blue: 0.91, alpha: 1.0)
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
-        let navigationVC:UINavigationController = UINavigationController(rootViewController: ChatVC)
+
+        
+//        let navigationVC:UINavigationController = UINavigationController(rootViewController: ChatVC)
         
         let frame = UIScreen.mainScreen().bounds
         window = UIWindow(frame: frame)
-        window!.rootViewController = navigationVC
+        window!.rootViewController = welcomeVC
         window!.makeKeyAndVisible()
         
         

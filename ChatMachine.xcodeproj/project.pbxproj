@@ -16,6 +16,9 @@
 		AE961EC61BE8314F00E04491 /* MessageBubbleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE961EC51BE8314F00E04491 /* MessageBubbleTableViewCell.swift */; };
 		AE961EC81BE8339B00E04491 /* MessageSentDateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE961EC71BE8339B00E04491 /* MessageSentDateTableViewCell.swift */; };
 		AE961ECA1BE833CA00E04491 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE961EC91BE833CA00E04491 /* ChatViewController.swift */; };
+		AEFE306A1BFDB8780060C353 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFE30691BFDB8780060C353 /* WelcomeViewController.swift */; };
+		AEFE306E1BFDB8BC0060C353 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFE306D1BFDB8BC0060C353 /* SignUpViewController.swift */; };
+		AEFE30711BFDBB060060C353 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFE30701BFDBB060060C353 /* LogInViewController.swift */; };
 		B93C5EF0A3887351E18FCEFB /* Pods_ChatMachine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7BBB4648F4A18FB5B0085C6 /* Pods_ChatMachine.framework */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +48,9 @@
 		AE961EC51BE8314F00E04491 /* MessageBubbleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageBubbleTableViewCell.swift; sourceTree = "<group>"; };
 		AE961EC71BE8339B00E04491 /* MessageSentDateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageSentDateTableViewCell.swift; sourceTree = "<group>"; };
 		AE961EC91BE833CA00E04491 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		AEFE30691BFDB8780060C353 /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		AEFE306D1BFDB8BC0060C353 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		AEFE30701BFDBB060060C353 /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		B7BBB4648F4A18FB5B0085C6 /* Pods_ChatMachine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatMachine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -91,10 +97,11 @@
 			isa = PBXGroup;
 			children = (
 				AE961E9F1BE82C4300E04491 /* AppDelegate.swift */,
-				AE961EC11BE830F000E04491 /* Message.swift */,
-				AE961EC51BE8314F00E04491 /* MessageBubbleTableViewCell.swift */,
-				AE961EC71BE8339B00E04491 /* MessageSentDateTableViewCell.swift */,
+				AEFE306F1BFDB8CA0060C353 /* Message */,
 				AE961EC91BE833CA00E04491 /* ChatViewController.swift */,
+				AEFE30691BFDB8780060C353 /* WelcomeViewController.swift */,
+				AEFE30701BFDBB060060C353 /* LogInViewController.swift */,
+				AEFE306D1BFDB8BC0060C353 /* SignUpViewController.swift */,
 				AE961EA31BE82C4300E04491 /* Main.storyboard */,
 				AE961EA61BE82C4300E04491 /* Assets.xcassets */,
 				AE961EA81BE82C4300E04491 /* LaunchScreen.storyboard */,
@@ -110,6 +117,16 @@
 				AE961EB61BE82C4400E04491 /* Info.plist */,
 			);
 			path = ChatMachineTests;
+			sourceTree = "<group>";
+		};
+		AEFE306F1BFDB8CA0060C353 /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				AE961EC11BE830F000E04491 /* Message.swift */,
+				AE961EC51BE8314F00E04491 /* MessageBubbleTableViewCell.swift */,
+				AE961EC71BE8339B00E04491 /* MessageSentDateTableViewCell.swift */,
+			);
+			name = Message;
 			sourceTree = "<group>";
 		};
 		C1A1AC22CE6016E081781D31 /* Frameworks */ = {
@@ -283,8 +300,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE961EC21BE830F000E04491 /* Message.swift in Sources */,
+				AEFE306E1BFDB8BC0060C353 /* SignUpViewController.swift in Sources */,
 				AE961EC61BE8314F00E04491 /* MessageBubbleTableViewCell.swift in Sources */,
 				AE961EA01BE82C4300E04491 /* AppDelegate.swift in Sources */,
+				AEFE30711BFDBB060060C353 /* LogInViewController.swift in Sources */,
+				AEFE306A1BFDB8780060C353 /* WelcomeViewController.swift in Sources */,
 				AE961ECA1BE833CA00E04491 /* ChatViewController.swift in Sources */,
 				AE961EC81BE8339B00E04491 /* MessageSentDateTableViewCell.swift in Sources */,
 			);
