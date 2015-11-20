@@ -11,6 +11,7 @@ import Parse
 import ParseUI
 import Alamofire
 import SnapKit
+import SafariServices
 
 let messageFontSize: CGFloat = 17
 let toolBarMinHeight: CGFloat = 44
@@ -23,7 +24,7 @@ class InputTextView: UITextView {
     
 }
 
-class ChatViewController: UITableViewController, UITextViewDelegate {
+class ChatViewController: UITableViewController, UITextViewDelegate, SFSafariViewControllerDelegate{
     
     //MARK: - Variables
     var messages:[[Message]] = [[]]
@@ -243,12 +244,38 @@ class ChatViewController: UITableViewController, UITextViewDelegate {
     
     //MARK: - UITableView Delegate
     override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-        let selectedCell = tableView.cellForRowAtIndexPath(indexPath) as! MessageBubbleTableViewCell
-        if selectedCell.url != ""{
+//        let selectedCell = tableView.cellForRowAtIndexPath(indexPath) as! MessageBubbleTableViewCell
+//        if selectedCell.url != ""{
+//            let url = NSURL(string: selectedCell.url)
+//            UIApplication.sharedApplication().openURL(url!)
+//        }
+//        return nil
+        
+        
+        guard let selectedCell = tableView.cellForRowAtIndexPath(indexPath) as? MessageBubbleTableViewCell else{
+            return nil
+        }
+        
+        guard selectedCell.url != "" else{
+            return nil
+        }
+        if #available(iOS 9.0, *) {
+            let webVC = SFSafariViewController(URL: NSURL(string:selectedCell.url)!, entersReaderIfAvailable: true)
+            webVC.delegate = self
+            webVC.navigationItem.rightBarButtonItem?.title = "完成"
+            self.presentViewController(webVC, animated: true, completion: nil)
+        } else {
+            
             let url = NSURL(string: selectedCell.url)
             UIApplication.sharedApplication().openURL(url!)
+
         }
         return nil
+    }
+    
+    @available(iOS 9.0, *)
+    func safariViewControllerDidFinish(controller: SFSafariViewController) {
+        controller.dismissViewControllerAnimated(true, completion: nil)
     }
     
     //MARK: - Message Action

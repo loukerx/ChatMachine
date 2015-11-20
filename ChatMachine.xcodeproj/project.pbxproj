@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D78BC542BF5454DBFE75D41 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4A0A5F7869737A246A53381 /* Pods.framework */; };
 		AE961EA01BE82C4300E04491 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE961E9F1BE82C4300E04491 /* AppDelegate.swift */; };
 		AE961EA51BE82C4300E04491 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE961EA31BE82C4300E04491 /* Main.storyboard */; };
 		AE961EA71BE82C4300E04491 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AE961EA61BE82C4300E04491 /* Assets.xcassets */; };
@@ -33,8 +34,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		68CE3AA7ADBFB53CDA8EA946 /* Pods-ChatMachine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatMachine.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ChatMachine/Pods-ChatMachine.debug.xcconfig"; sourceTree = "<group>"; };
-		ABE8C7121EC59F1E0EAF13AD /* Pods-ChatMachine.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatMachine.release.xcconfig"; path = "Pods/Target Support Files/Pods-ChatMachine/Pods-ChatMachine.release.xcconfig"; sourceTree = "<group>"; };
+		4BFADFC27686DC72E0F1DBA8 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		A4A0A5F7869737A246A53381 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA68090FAD9E828D48950300 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		AE961E9C1BE82C4300E04491 /* ChatMachine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatMachine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE961E9F1BE82C4300E04491 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AE961EA41BE82C4300E04491 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B93C5EF0A3887351E18FCEFB /* Pods_ChatMachine.framework in Frameworks */,
+				8D78BC542BF5454DBFE75D41 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,14 +76,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6F03F6D0A56E7A9F6A44132D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				AA68090FAD9E828D48950300 /* Pods.debug.xcconfig */,
+				4BFADFC27686DC72E0F1DBA8 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		AE961E931BE82C4300E04491 = {
 			isa = PBXGroup;
 			children = (
 				AE961E9E1BE82C4300E04491 /* ChatMachine */,
 				AE961EB31BE82C4400E04491 /* ChatMachineTests */,
 				AE961E9D1BE82C4300E04491 /* Products */,
-				D8643B04D42D7DECC2164216 /* Pods */,
 				C1A1AC22CE6016E081781D31 /* Frameworks */,
+				6F03F6D0A56E7A9F6A44132D /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -133,17 +145,9 @@
 			isa = PBXGroup;
 			children = (
 				B7BBB4648F4A18FB5B0085C6 /* Pods_ChatMachine.framework */,
+				A4A0A5F7869737A246A53381 /* Pods.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		D8643B04D42D7DECC2164216 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				68CE3AA7ADBFB53CDA8EA946 /* Pods-ChatMachine.debug.xcconfig */,
-				ABE8C7121EC59F1E0EAF13AD /* Pods-ChatMachine.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,7 +263,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ChatMachine/Pods-ChatMachine-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		956E696CC81EFFCFAB725EC9 /* Copy Pods Resources */ = {
@@ -274,7 +278,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ChatMachine/Pods-ChatMachine-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BFC9BEFA709092C26D933D83 /* Check Pods Manifest.lock */ = {
@@ -431,7 +435,7 @@
 		};
 		AE961EBA1BE82C4400E04491 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 68CE3AA7ADBFB53CDA8EA946 /* Pods-ChatMachine.debug.xcconfig */;
+			baseConfigurationReference = AA68090FAD9E828D48950300 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ChatMachine/Info.plist;
@@ -444,7 +448,7 @@
 		};
 		AE961EBB1BE82C4400E04491 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = ABE8C7121EC59F1E0EAF13AD /* Pods-ChatMachine.release.xcconfig */;
+			baseConfigurationReference = 4BFADFC27686DC72E0F1DBA8 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ChatMachine/Info.plist;
