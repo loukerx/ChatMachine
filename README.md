@@ -1,4 +1,4 @@
-# ChatMachine 0.4.1
+# ChatMachine 0.5.0
 This is a practice of a chatting app from this [tutorial](http://www.jianshu.com/p/1f93e0fec8a5) 
 
 # Requirements
@@ -57,4 +57,10 @@ PFLogInViewController和PFSignUpViewController
 ```
 
 ## [Tutorial 5](http://www.jianshu.com/p/6bf05564fe27)
+```
+Pod Update
+使用swift2.0的新语法guard对项目代码进行优化和修改
+使用iOS9的新组件SFSafariViewController快速实现内置浏览器
+...
+```
 
