@@ -21,7 +21,6 @@ let textViewMaxHeight: (portrait: CGFloat, landscape: CGFloat) = (portrait: 272,
 class InputTextView: UITextView {
     
     
-    
 }
 
 class ChatViewController: UITableViewController, UITextViewDelegate, SFSafariViewControllerDelegate{
@@ -39,7 +38,8 @@ class ChatViewController: UITableViewController, UITextViewDelegate, SFSafariVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        print("heiheihei")
+
         
         tableView.registerClass(MessageSentDateTableViewCell.self, forCellReuseIdentifier: NSStringFromClass(MessageSentDateTableViewCell))
         
